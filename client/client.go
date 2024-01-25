@@ -1,4 +1,4 @@
-package goposhmark
+package gopostmark
 
 import (
 	"bytes"
@@ -10,7 +10,7 @@ import (
 	"net/http/httputil"
 )
 
-type PoshmarkClient struct {
+type PostmarkClient struct {
 	ServerToken string
 }
 
@@ -23,15 +23,15 @@ type EmailRequest struct {
 	MessageStream string `json:"MessageStream"`
 }
 
-// Create Poshmark Email API client.
-func Client(serverToken string) *PoshmarkClient {
-	return &PoshmarkClient{
+// Create Postmark Email API client.
+func Client(serverToken string) *PostmarkClient {
+	return &PostmarkClient{
 		ServerToken: serverToken,
 	}
 }
 
-// Sends via the Poshmark API
-func (pc *PoshmarkClient) SendEmail(emailRequest EmailRequest) ([]byte, error) {
+// Sends via the Postmark API
+func (pc *PostmarkClient) SendEmail(emailRequest EmailRequest) ([]byte, error) {
 	requestBody, err := json.Marshal(emailRequest)
 	if err != nil {
 		return nil, err

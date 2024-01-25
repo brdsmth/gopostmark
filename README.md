@@ -1,41 +1,30 @@
 ## Introduction
 
-Go wrapper for more easily interacting with the Poshmark API.
+Go wrapper for more easily interacting with the Postmark API.
 
 ## Usage
 
-```
-go get -u github.com/brdsmth/goposhmark
-```
+Import the package
 
 ```
-package main
+go get -u github.com/brdsmth/gopostmark
+```
 
-import (
-	"fmt"
+Create a client and pass `X-Postmark-Server-Token`
 
-	goposhmark "github.com/brdsmth/goposhmark/client"
-)
+```
+client := gopostmark.Client("your-server-token")
 
-func main() {
-
-	client := goposhmark.Client("your-server-token")
-
-	email := goposhmark.EmailRequest{
-		From:          "example@example.com",
-		To:            "example@example.com",
-		Subject:       "Postmark test",
-		TextBody:      "Hello dear Postmark user.",
-		HtmlBody:      "<html><body><strong>Hello</strong> dear Postmark user.</body></html>",
-		MessageStream: "outbound",
-	}
-
-	response, err := client.SendEmail(email)
-	if err != nil {
-		// Handle the error
-	}
+email := gopostmark.EmailRequest{
+	From:          "example@example.com",
+	To:            "example@example.com",
+	Subject:       "Postmark test",
+	TextBody:      "Hello dear Postmark user.",
+	HtmlBody:      "<html><body><strong>Hello</strong> dear Postmark user.</body></html>",
+	MessageStream: "outbound",
 }
 
+response, err := client.SendEmail(email)
 ```
 
 ## Contribute
