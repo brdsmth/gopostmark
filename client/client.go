@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/http/httputil"
 )
 
 type PoshmarkClient struct {
@@ -55,7 +56,13 @@ func (pc *PoshmarkClient) SendEmail(emailRequest EmailRequest) ([]byte, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, errors.New("failure")
+		// Format and print the response
+		dump, err := httputil.DumpResponse(resp, true)
+		if err != nil {
+			return nil, fmt.Errorf("failed to format response: %s", err)
+		}
+		dumpStr := string(dump)
+		return nil, errors.New(dumpStr)
 	}
 
 	// Read and return the response body
