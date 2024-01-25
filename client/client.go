@@ -50,12 +50,12 @@ func (pc *PoshmarkClient) SendEmail(emailRequest EmailRequest) ([]byte, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("failed to send email: %s", err)
+		return nil, fmt.Errorf("http failure: %s", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, errors.New("failed to send email")
+		return nil, errors.New("failure")
 	}
 
 	// Read and return the response body
