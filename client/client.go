@@ -4,7 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"fmt"
+	"io"
 	"net/http"
 )
 
@@ -49,7 +50,7 @@ func (pc *PoshmarkClient) SendEmail(emailRequest EmailRequest) ([]byte, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to send email: %s", err)
 	}
 	defer resp.Body.Close()
 
@@ -58,7 +59,7 @@ func (pc *PoshmarkClient) SendEmail(emailRequest EmailRequest) ([]byte, error) {
 	}
 
 	// Read and return the response body
-	responseBody, err := ioutil.ReadAll(resp.Body)
+	responseBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
